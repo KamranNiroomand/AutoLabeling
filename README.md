@@ -1,22 +1,19 @@
 # Auto_Labeling
-Overview
 
-This project is focused on automating the process of generating general labels for given topics based on their associated labels. The goal is to provide a more efficient and standardized approach to labeling topics, reducing the need for manual effort and subjectivity.
+This project focuses on auto labeling and topic similarity analysis using the BERTopic library and NLP techniques. T
 
 Methodology
 
-The project utilizes natural language processing (NLP) techniques and the Transformers library to analyze the labels and extract meaningful information. The following steps are involved in the auto labeling process:
+The project follows the following steps:
 
-Data Preparation: The input data, stored in an Excel file, is read using the pandas library to create a DataFrame. The DataFrame contains three columns: topic_no, labels, and expert label.
-Text Processing: The labels associated with each topic are preprocessed using tokenization, lemmatization, and stop word removal. This step aims to standardize the labels and remove any irrelevant words that do not contribute to the labeling process.
-Word Frequency Analysis: The frequency of each word in the labels is analyzed to identify the most common and relevant terms. This helps in capturing the key aspects of the topics and generating informative general labels.
-Named Entity Recognition (NER): NER is performed to identify named entities in the labels. Specifically, location-based entities are extracted using part-of-speech tagging and chunking techniques. This allows the generation of location-specific general labels.
-General Label Generation: Based on the word frequency analysis and NER results, a general label is generated for each topic. The general label represents a concise summary of the topic, capturing its main keywords and, if applicable, location-specific information.
-Transfer Learning: The Transformers library is used to apply pre-trained models for named entity recognition (NER). This helps in extracting organization-based entities from the labels, further enhancing the generated general labels.
-Label Assignment: The generated general labels are assigned to each topic and stored in a new column called general_label in the DataFrame.
-Usage
+1. Data Loading: The project assumes that the input data is stored in a CSV file named "AI.csv". It uses the pandas library to load the data into a DataFrame and drops any rows with missing values.
+2. Data Preparation: The "Title" and "Abstract" columns are combined into a new column called "new" to create a list of documents for further analysis.
+3. Auto Labeling: The BERTopic library is used to perform auto labeling on the documents. The BERTopic class is instantiated with the parameter calculate_probabilities=True to calculate the probabilities for each topic. The fit_transform method is then applied to the documents to obtain the topics and their associated probabilities.
+Saving and Loading Model: The fitted BERTopic model and the document list are saved using the pickle library. This allows the model and data to be reused without retraining in future runs.
+4. Text Summarization: The T5 language model and tokenizer from the Transformers library are utilized for text summarization. The summarizer pipeline is created to generate summaries for a given list of articles. The generated summaries are then combined to create a headline using the headline_generator model.
+5. Topic Label Generation: The generate_topic_label function is defined to generate topic labels by summarizing the articles related to a specific topic. It randomly samples articles and generates summaries until the maximum token length is reached. The summaries are then concatenated and used as input to the headline generator model to generate a label.
+6. Topic Filtering: The project demonstrates how to filter documents based on a specific topic ID. The documents corresponding to the desired topic ID are extracted and stored in a list called topic_3.
+7. Multiple Topic Label Generation: The run_generate_topic_label function is defined to generate multiple topic labels for a given list of articles. It calls the generate_topic_label function multiple times and stores the generated labels in a list.
+8. Similarity Measurement: The measure_similarity_of_topic function measures the similarity between topic labels. It uses cosine similarity to compute a similarity matrix based on the embeddings of the labels. The function returns the similarity matrix, the label with the highest similarity score, and the average score across all pairs.
+9. Similarity Matrix Visualization: The plot_similarity_matrix function visualizes the similarity matrix using a heatmap. It uses the Plotly library to create a heatmap trace and layout, and then generates a figure to display the matrix.
 
-To use the auto labeling project, follow these steps:
-
-Ensure that you have Python 3.x installed on your system.
-Install the required libraries by running the following command:
