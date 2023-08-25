@@ -1,6 +1,6 @@
 # Auto_Labeling
 
-This project focuses on auto labeling and topic similarity analysis using the BERTopic library and NLP techniques. T
+This project focuses on auto labeling and topic similarity analysis using the BERTopic library and NLP techniques. 
 
 Methodology
 
